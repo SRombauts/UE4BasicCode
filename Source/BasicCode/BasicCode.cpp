@@ -5,3 +5,8 @@
 #include "BasicCode.generated.inl"
 
 IMPLEMENT_PRIMARY_GAME_MODULE( FDefaultGameModuleImpl, BasicCode, "BasicCode" );
+
+
+// Logging during game startup
+// (Logging, see UnrealEngine Wiki "Logs, Printing Messages To Yourself During Runtime")
+DEFINE_LOG_CATEGORY(GameInit);
