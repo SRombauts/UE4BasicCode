@@ -5,12 +5,33 @@
 
 
 ABasicCodePlayerController::ABasicCodePlayerController(const class FPostConstructInitializeProperties& PCIP)
-	: Super(PCIP)
+: Super(PCIP)
 {
-  UE_LOG(GameInit, Log, TEXT("ABasicCodePlayerController: ctor"));
-
-  // NOTE SRombauts: this crash the Editor at startup!
-  // GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, FString("PlayerController: Test"));
+	if (GEngine)
+	{
+		UE_LOG(GameInit, Log, TEXT("ABasicCodePlayerController: ctor"));
+		GEngine->AddOnScreenDebugMessage(-1, 60.f, FColor::Green, FString("ABasicCodePlayerController: ctor"));
+	}
+	else
+	{
+		UE_LOG(GameInit, Warning, TEXT("ABasicCodePlayerController: ctor (GEngine null)"));
+	}
 }
 
+
+void ABasicCodePlayerController::BeginPlay()
+{
+	Super::BeginPlay();
+
+	if (GEngine)
+	{
+		UE_LOG(GameInit, Log, TEXT("ABasicCodePlayerController: BeginPlay"));
+		GEngine->AddOnScreenDebugMessage(-1, 60.f, FColor::Green, TEXT("ABasicCodePlayerController: BeginPlay"));
+	}
+	else
+	{
+		// TODO SRombauts: possible?
+		UE_LOG(GameInit, Error, TEXT("ABasicCodePlayerController: StartPlay (GEngine null)"));
+	}
+}
 

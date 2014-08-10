@@ -6,13 +6,14 @@
 #include "BasicCodeGameMode.generated.h"
 
 /**
- * 
+ * Management of the Game (server side only!)
  */
 UCLASS()
 class ABasicCodeGameMode : public AGameMode
 {
 	GENERATED_UCLASS_BODY()
 
-	
-	
+public:
+	/** Transitions to WaitingToStart and calls BeginPlay on actors. */
+	virtual void StartPlay() override;
 };

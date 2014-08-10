@@ -26,9 +26,32 @@
 ABasicCodeGameMode::ABasicCodeGameMode(const class FPostConstructInitializeProperties& PCIP)
 	: Super(PCIP)
 {
-  UE_LOG(GameInit, Log, TEXT("ABasicCodeGameMode: ctor"));
+	if (GEngine)
+	{
+		UE_LOG(GameInit, Log, TEXT("ABasicCodeGameMode: ctor"));
+		GEngine->AddOnScreenDebugMessage(-1, 60.f, FColor::Blue, FString("ABasicCodeGameMode: ctor"));
+	}
+	else
+	{
+		UE_LOG(GameInit, Warning, TEXT("ABasicCodeGameMode: ctor (GEngine null)"));
+	}
 
 	PlayerControllerClass = ABasicCodePlayerController::StaticClass();
 }
 
+void ABasicCodeGameMode::StartPlay()
+{
+	Super::StartPlay();
 
+	UE_LOG(GameInit, Log, TEXT("ABasicCodeGameMode: StartPlay"));
+	if (GEngine)
+	{
+		UE_LOG(GameInit, Log, TEXT("ABasicCodeGameMode: StartPlay"));
+		GEngine->AddOnScreenDebugMessage(-1, 60.f, FColor::Blue, FString("ABasicCodeGameMode: StartPlay"));
+	}
+	else
+	{
+		// TODO SRombauts: possible?
+		UE_LOG(GameInit, Error, TEXT("ABasicCodeGameMode: StartPlay (GEngine null)"));
+	}
+}

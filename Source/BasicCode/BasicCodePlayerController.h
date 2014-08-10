@@ -6,13 +6,13 @@
 #include "BasicCodePlayerController.generated.h"
 
 /**
- * 
+ * Management of the Player Pawn
  */
 UCLASS()
 class ABasicCodePlayerController : public APlayerController
 {
 	GENERATED_UCLASS_BODY()
 
-	
-	
+public:
+	virtual void BeginPlay() override;
 };
