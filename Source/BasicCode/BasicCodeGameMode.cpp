@@ -43,7 +43,6 @@ void ABasicCodeGameMode::StartPlay()
 {
 	Super::StartPlay();
 
-	UE_LOG(GameInit, Log, TEXT("ABasicCodeGameMode: StartPlay"));
 	if (GEngine)
 	{
 		UE_LOG(GameInit, Log, TEXT("ABasicCodeGameMode: StartPlay"));
