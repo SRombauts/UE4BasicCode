@@ -32,21 +32,19 @@ void ABasicCodePlayerController::BeginPlay()
 		UWorld* const World = GetWorld();
 		if (World)
 		{
-			UE_LOG(GameInit, Log, TEXT("ABasicCodeGameMode: World"));
+			UE_LOG(GameInit, Log, TEXT("ABasicCodePlayerController: World"));
+			const FVector   Location = FVector::ForwardVector * 10;
+			const FRotator  Rotation = FRotator::ZeroRotator;
 			// FActorSpawnParameters SpawnParams;
 			// SpawnParams.Owner = this;
-	     // AHelloWorldPrinter* const HelloWorldPrinter = World->SpawnActor<AHelloWorldPrinter>(ProjectileClass, MuzzleLocation, MuzzleRotation, SpawnParams);
-			AHelloWorldPrinter* const HelloWorldPrinter = World->SpawnActor<AHelloWorldPrinter>();
-			if (HelloWorldPrinter)
+		//	AHelloWorldPrinter* const HelloWorldPrinter = World->SpawnActor<AHelloWorldPrinter>(ProjectileClass, MuzzleLocation, MuzzleRotation, SpawnParams);
+		//	AHelloWorldPrinter* const HelloWorldPrinter = World->SpawnActor<AHelloWorldPrinter>();
+			AHelloWorldPrinter* const HelloWorldPrinter = World->SpawnActor<AHelloWorldPrinter>(Location, Rotation);
+			if(HelloWorldPrinter)
 			{
-				UE_LOG(GameInit, Log, TEXT("ABasicCodeGameMode: HelloWorldPrinter spawned"));
+				UE_LOG(GameInit, Log, TEXT("ABasicCodePlayerController: HelloWorldPrinter spawned with Location"));
 			}
 		}
-	}
-	else
-	{
-		// TODO SRombauts: possible?
-		UE_LOG(GameInit, Error, TEXT("ABasicCodePlayerController: StartPlay (GEngine null)"));
 	}
 }
 

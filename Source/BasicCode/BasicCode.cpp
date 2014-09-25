@@ -2,8 +2,6 @@
 
 #include "BasicCode.h"
 
-#include "BasicCode.generated.inl"
-
 IMPLEMENT_PRIMARY_GAME_MODULE( FDefaultGameModuleImpl, BasicCode, "BasicCode" );
 
 
