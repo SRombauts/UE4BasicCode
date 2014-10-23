@@ -1,4 +1,4 @@
-// Copyright 1998-2014 Epic Games, Inc. All Rights Reserved.
+// UE4 Procedural Mesh Generation from the Epic Wiki (https://wiki.unrealengine.com/Procedural_Mesh_Generation)
 
 #pragma once
 
@@ -9,14 +9,14 @@ struct FGeneratedMeshTriangle
 {
 	GENERATED_USTRUCT_BODY()
 
-		UPROPERTY(EditAnywhere, Category = Triangle)
-		FVector Vertex0;
+	UPROPERTY(EditAnywhere, Category = Triangle)
+	FVector Vertex0;
 
 	UPROPERTY(EditAnywhere, Category = Triangle)
-		FVector Vertex1;
+	FVector Vertex1;
 
 	UPROPERTY(EditAnywhere, Category = Triangle)
-		FVector Vertex2;
+	FVector Vertex2;
 };
 
 /** Component that allows you to specify custom triangle mesh geometry */
@@ -28,7 +28,7 @@ class UGeneratedMeshComponent : public UMeshComponent, public IInterface_Collisi
 public:
 	/** Set the geometry to use on this triangle mesh */
 	UFUNCTION(BlueprintCallable, Category = "Components|GeneratedMesh")
-		bool SetGeneratedMeshTriangles(const TArray<FGeneratedMeshTriangle>& Triangles);
+	bool SetGeneratedMeshTriangles(const TArray<FGeneratedMeshTriangle>& Triangles);
 
 	/** Description of collision */
 	UPROPERTY(BlueprintReadOnly, Category = "Collision")
@@ -42,19 +42,17 @@ public:
 	virtual bool GetPhysicsTriMeshData(struct FTriMeshCollisionData* CollisionData, bool InUseAllTriData) override;
 	virtual bool ContainsPhysicsTriMeshData(bool InUseAllTriData) const override;
 	virtual bool WantsNegXTriMesh() override{ return false; }
-		// End Interface_CollisionDataProvider Interface
+	// End Interface_CollisionDataProvider Interface
 
-		// Begin UPrimitiveComponent interface.
+	// Begin UPrimitiveComponent interface.
 	virtual FPrimitiveSceneProxy* CreateSceneProxy() override;
 	virtual class UBodySetup* GetBodySetup() override;
 	// End UPrimitiveComponent interface.
 
 	void UpdateBodySetup();
 	void UpdateCollision();
+
 private:
-
-
-
 	// Begin USceneComponent interface.
 	virtual FBoxSphereBounds CalcBounds(const FTransform & LocalToWorld) const override;
 	// Begin USceneComponent interface.

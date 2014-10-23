@@ -1,4 +1,4 @@
-// Copyright 1998-2014 Epic Games, Inc. All Rights Reserved.
+// UE4 Procedural Mesh Generation from the Epic Wiki (https://wiki.unrealengine.com/Procedural_Mesh_Generation)
 
 #include "BasicCode.h"
 #include "GameGeneratedActor.h"
@@ -6,10 +6,9 @@
 AGameGeneratedActor::AGameGeneratedActor(const class FPostConstructInitializeProperties& PCIP)
 	: Super(PCIP)
 {
-
 	TSubobjectPtr<UGeneratedMeshComponent> mesh = PCIP.CreateDefaultSubobject<UGeneratedMeshComponent>(this, TEXT("GeneratedMesh"));
 
-	//Contains the points describing the polyline we are going to rotate
+	// Contains the points describing the polyline we are going to rotate
 	TArray<FVector> points;
 
 	points.Add(FVector(20, 5, 0));
@@ -22,7 +21,6 @@ AGameGeneratedActor::AGameGeneratedActor(const class FPostConstructInitializePro
 	points.Add(FVector(3, 4, 0));
 	points.Add(FVector(2, 3, 0));
 	points.Add(FVector(1, 4, 0));
-
 
 	TArray<FGeneratedMeshTriangle> triangles;
 	Lathe(points, triangles, 128);
@@ -61,7 +59,7 @@ void AGameGeneratedActor::Lathe(const TArray<FVector>& points, TArray<FGenerated
 	y' = y
 	*/
 
-	//Working point array, in which we keep the rotated line we draw with
+	// Working point array, in which we keep the rotated line we draw with
 	TArray<FVector> wp;
 	for(int i = 0; i < points.Num(); i++)
 	{
@@ -73,7 +71,7 @@ void AGameGeneratedActor::Lathe(const TArray<FVector>& points, TArray<FGenerated
 	FVector pLast(wp[wp.Num() - 1].X, 0, 0);
 
 	FGeneratedMeshTriangle tri;
-	//for each segment draw the triangles clockwise for normals pointing out or counterclockwise for the opposite (this here does CW)
+	// for each segment draw the triangles clockwise for normals pointing out or counterclockwise for the opposite (this here does CW)
 	for(int segment = 0; segment<segments; segment++)
 	{
 

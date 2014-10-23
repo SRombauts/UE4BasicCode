@@ -1,4 +1,4 @@
-// Copyright 1998-2014 Epic Games, Inc. All Rights Reserved. 
+// UE4 Procedural Mesh Generation from the Epic Wiki (https://wiki.unrealengine.com/Procedural_Mesh_Generation)
 
 #include "BasicCode.h"
 #include "DynamicMeshBuilder.h"
@@ -18,9 +18,7 @@ public:
 		void* VertexBufferData = RHILockVertexBuffer(VertexBufferRHI, 0, Vertices.Num() * sizeof(FDynamicMeshVertex), RLM_WriteOnly);
 		FMemory::Memcpy(VertexBufferData, Vertices.GetTypedData(), Vertices.Num() * sizeof(FDynamicMeshVertex));
 		RHIUnlockVertexBuffer(VertexBufferRHI);
-
 	}
-
 };
 
 /** Index Buffer */
@@ -44,32 +42,31 @@ public:
 class FGeneratedMeshVertexFactory : public FLocalVertexFactory
 {
 public:
-
 	FGeneratedMeshVertexFactory()
 	{
 	}
 
-
 	/** Initialization */
 	void Init(const FGeneratedMeshVertexBuffer* VertexBuffer)
 	{
-		check(!IsInRenderingThread());
+		// Commented out to enable building light of a level (but no backing is done for the procedural mesh itself)
+        //check(!IsInRenderingThread());
 
 		ENQUEUE_UNIQUE_RENDER_COMMAND_TWOPARAMETER(
 			InitGeneratedMeshVertexFactory,
 			FGeneratedMeshVertexFactory*, VertexFactory, this,
 			const FGeneratedMeshVertexBuffer*, VertexBuffer, VertexBuffer,
 			{
-			// Initialize the vertex factory's stream components.
-			DataType NewData;
-			NewData.PositionComponent = STRUCTMEMBER_VERTEXSTREAMCOMPONENT(VertexBuffer, FDynamicMeshVertex, Position, VET_Float3);
-			NewData.TextureCoordinates.Add(
-				FVertexStreamComponent(VertexBuffer, STRUCT_OFFSET(FDynamicMeshVertex, TextureCoordinate), sizeof(FDynamicMeshVertex), VET_Float2)
-				);
-			NewData.TangentBasisComponents[0] = STRUCTMEMBER_VERTEXSTREAMCOMPONENT(VertexBuffer, FDynamicMeshVertex, TangentX, VET_PackedNormal);
-			NewData.TangentBasisComponents[1] = STRUCTMEMBER_VERTEXSTREAMCOMPONENT(VertexBuffer, FDynamicMeshVertex, TangentZ, VET_PackedNormal);
-			NewData.ColorComponent = STRUCTMEMBER_VERTEXSTREAMCOMPONENT(VertexBuffer, FDynamicMeshVertex, Color, VET_Color);
-			VertexFactory->SetData(NewData);
+			    // Initialize the vertex factory's stream components.
+			    DataType NewData;
+			    NewData.PositionComponent = STRUCTMEMBER_VERTEXSTREAMCOMPONENT(VertexBuffer, FDynamicMeshVertex, Position, VET_Float3);
+			    NewData.TextureCoordinates.Add(
+				    FVertexStreamComponent(VertexBuffer, STRUCT_OFFSET(FDynamicMeshVertex, TextureCoordinate), sizeof(FDynamicMeshVertex), VET_Float2)
+				    );
+			    NewData.TangentBasisComponents[0] = STRUCTMEMBER_VERTEXSTREAMCOMPONENT(VertexBuffer, FDynamicMeshVertex, TangentX, VET_PackedNormal);
+			    NewData.TangentBasisComponents[1] = STRUCTMEMBER_VERTEXSTREAMCOMPONENT(VertexBuffer, FDynamicMeshVertex, TangentZ, VET_PackedNormal);
+			    NewData.ColorComponent = STRUCTMEMBER_VERTEXSTREAMCOMPONENT(VertexBuffer, FDynamicMeshVertex, Color, VET_Color);
+			    VertexFactory->SetData(NewData);
 			});
 	}
 };
@@ -100,12 +97,10 @@ bool UGeneratedMeshComponent::SetGeneratedMeshTriangles(const TArray<FGeneratedM
 
 FPrimitiveSceneProxy* UGeneratedMeshComponent::CreateSceneProxy()
 {
-
 	/** Scene proxy defined only inside the scope of this one function */
 	class FGeneratedMeshSceneProxy : public FPrimitiveSceneProxy
 	{
 	public:
-
 		FGeneratedMeshSceneProxy(UGeneratedMeshComponent* Component)
 			: FPrimitiveSceneProxy(Component)
 			, MaterialRelevance(Component->GetMaterialRelevance())
@@ -113,7 +108,7 @@ FPrimitiveSceneProxy* UGeneratedMeshComponent::CreateSceneProxy()
 			const FColor VertexColor(255, 255, 255);
 
 			// Add each triangle to the vertex/index buffer
-			for(int TriIdx = 0; TriIdx<Component->GeneratedMeshTris.Num(); TriIdx++)
+			for(int TriIdx = 0; TriIdx < Component->GeneratedMeshTris.Num(); TriIdx++)
 			{
 				FGeneratedMeshTriangle& Tri = Component->GeneratedMeshTris[TriIdx];
 
@@ -158,7 +153,13 @@ FPrimitiveSceneProxy* UGeneratedMeshComponent::CreateSceneProxy()
 			Material = Component->GetMaterial(0);
 			if(Material == NULL)
 			{
+				// TODO :
+				UE_LOG(LogClass, Log, TEXT("FGeneratedMeshSceneProxy: DefaultMaterial"));
 				Material = UMaterial::GetDefaultMaterial(MD_Surface);
+			}
+			else
+			{
+				UE_LOG(LogClass, Log, TEXT("FGeneratedMeshSceneProxy: HaveMaterial"));
 			}
 		}
 
@@ -177,7 +178,7 @@ FPrimitiveSceneProxy* UGeneratedMeshComponent::CreateSceneProxy()
 
 			FColoredMaterialRenderProxy WireframeMaterialInstance(
 				WITH_EDITOR ? GEngine->WireframeMaterial->GetRenderProxy(IsSelected()) : NULL,
-				//GEngine->WireframeMaterial->GetRenderProxy(IsSelected()),
+				// GEngine->WireframeMaterial->GetRenderProxy(IsSelected()),
 				FLinearColor(0, 0.5f, 1.f)
 				);
 
@@ -245,7 +246,7 @@ FPrimitiveSceneProxy* UGeneratedMeshComponent::CreateSceneProxy()
 	};
 
 
-	//Only create if have enough tris
+	// Only create if have at least one triangle
 	if(GeneratedMeshTris.Num() > 0)
 	{
 		return new FGeneratedMeshSceneProxy(this);
@@ -348,8 +349,8 @@ void UGeneratedMeshComponent::UpdateCollision()
 		UpdateBodySetup();
 		CreatePhysicsState();
 
-		ModelBodySetup->InvalidatePhysicsData(); //Will not work in Packaged build
-		//Epic needs to add support for this
+		ModelBodySetup->InvalidatePhysicsData(); // Will not work in Packaged build
+		// Epic needs to add support for this
 		ModelBodySetup->CreatePhysicsMeshes();
 	}
 }

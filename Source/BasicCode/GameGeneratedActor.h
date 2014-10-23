@@ -1,4 +1,4 @@
-// Copyright 1998-2014 Epic Games, Inc. All Rights Reserved.
+// UE4 Procedural Mesh Generation from the Epic Wiki (https://wiki.unrealengine.com/Procedural_Mesh_Generation)
 
 #pragma once
 
@@ -7,13 +7,12 @@
 #include "GameGeneratedActor.generated.h"
 
 /**
-*
-*/
+ * 
+ */
 UCLASS()
 class AGameGeneratedActor : public AActor
 {
 	GENERATED_UCLASS_BODY()
 
-		void Lathe(const TArray<FVector>& points, TArray<FGeneratedMeshTriangle>& triangles, int segments = 64);
-
+	void Lathe(const TArray<FVector>& points, TArray<FGeneratedMeshTriangle>& triangles, int segments = 64);
 };
