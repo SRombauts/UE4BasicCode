@@ -16,7 +16,8 @@ AGeneratedTriangle::AGeneratedTriangle(const class FPostConstructInitializePrope
 {
 	mesh = PCIP.CreateDefaultSubobject<UGeneratedMeshComponent>(this, TEXT("GeneratedMesh"));
 
-	static ConstructorHelpers::FObjectFinder<UMaterialInterface> Material(TEXT("/Game/Materials/BaseColor.BaseColor"));
+//	static ConstructorHelpers::FObjectFinder<UMaterialInterface> Material(TEXT("Material'/Game/Materials/BaseColor.BaseColor'"));
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> Material(TEXT("Material'/Game/Materials/M_Concrete_Poured.M_Concrete_Poured'"));
 	mesh->SetMaterial(0, Material.Object);
 
 	TArray<FGeneratedMeshTriangle> triangles;
@@ -37,5 +38,11 @@ void AGeneratedTriangle::Triangle(TArray<FGeneratedMeshTriangle>& triangles)
 	triangle.Vertex0.Color = Blue;
 	triangle.Vertex1.Color = Blue;
 	triangle.Vertex2.Color = Blue;
+	triangle.Vertex0.U = 0.0f;
+	triangle.Vertex0.V = 0.0f;
+	triangle.Vertex1.U = 1.0f;
+	triangle.Vertex1.V = 0.0f;
+	triangle.Vertex2.U = 0.5f;
+	triangle.Vertex2.V = 0.75f;
 	triangles.Add(triangle);
 }
