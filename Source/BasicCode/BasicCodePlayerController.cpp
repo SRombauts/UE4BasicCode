@@ -4,6 +4,7 @@
 #include "BasicCodePlayerController.h"
 #include "HelloWorldPrinter.h"
 #include "GameGeneratedActor.h"
+#include "GeneratedTriangle.h"
 
 
 ABasicCodePlayerController::ABasicCodePlayerController(const class FPostConstructInitializeProperties& PCIP)
@@ -35,7 +36,7 @@ void ABasicCodePlayerController::BeginPlay()
 		{
 			UE_LOG(GameInit, Log, TEXT("ABasicCodePlayerController: World"));
 			// Spawn a static mesh cube in front of the starting position of the player, a bit on the right
-			const FVector   Location = FVector(400.f, 50.f, 0.f);
+			const FVector   Location(550.f, 50.f, 0.f);
 			const FRotator  Rotation = FRotator::ZeroRotator;
 			AHelloWorldPrinter* const HelloWorldPrinter = World->SpawnActor<AHelloWorldPrinter>(Location, Rotation);
 			if(HelloWorldPrinter)
@@ -43,13 +44,21 @@ void ABasicCodePlayerController::BeginPlay()
 				UE_LOG(GameInit, Log, TEXT("ABasicCodePlayerController: HelloWorldPrinter spawned with Location"));
 			}
 			// Spawn a dynamic mesh in front of the player, a little bit on the left
-			const FVector   Location2 = FVector(100.f, -10.f, 0.f);
-			AGameGeneratedActor* const GameGeneratedActor = World->SpawnActor<AGameGeneratedActor>(Location2, Rotation);
+			const FVector   Location2(200.f, -150.f, 0.f);
+			const FRotator  Rotation2(0.f, 45.f, 0.f);
+			AGameGeneratedActor* const GameGeneratedActor = World->SpawnActor<AGameGeneratedActor>(Location2, Rotation2);
 			if(GameGeneratedActor)
 			{
-				// Scale it
+				// Scale it x5
 				//GameGeneratedActor->SetActorScale3D(FVector(5.f, 5.f, 5.f));
-				UE_LOG(GameInit, Log, TEXT("ABasicCodePlayerController: GameGeneratedActor spawned with Location"));
+				UE_LOG(GameInit, Log, TEXT("ABasicCodePlayerController: GameGeneratedActor spawned"));
+			}
+			// Spawn a dynamic mesh in front of the player, a little bit on the right
+			const FVector   Location3(150.f, 100.f, -30.f);
+			AGeneratedTriangle* const GeneratedTriangle = World->SpawnActor<AGeneratedTriangle>(Location3, Rotation);
+			if(GeneratedTriangle)
+			{
+				UE_LOG(GameInit, Log, TEXT("ABasicCodePlayerController: GeneratedTriangle spawned"));
 			}
 		}
 	}

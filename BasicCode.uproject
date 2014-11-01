@@ -1,22 +1,13 @@
 {
 	"FileVersion": 3,
-	"Version": 0,
-	"VersionName": "0.0",
-	"EngineVersion": "4.0.2-2034640+++depot+UE4-Releases+4.0",
-	"PackageFileUE4Version": 342,
-	"PackageFileLicenseeUE4Version": 0,
-	"FriendlyName": "",
-	"Description": "",
+	"EngineAssociation": "4.5",
 	"Category": "",
-	"CreatedBy": "",
-	"CreatedByURL": "",
+	"Description": "",
 	"Modules": [
 		{
 			"Name": "BasicCode",
 			"Type": "Runtime",
 			"LoadingPhase": "Default"
 		}
-	],
-	"EpicSampleNameHash": "0",
-	"EngineAssociation": "4.4"
+	]
 }
