@@ -47,8 +47,8 @@ void ABasicCodePlayerController::BeginPlay()
 			AGameGeneratedActor* const GameGeneratedActor = World->SpawnActor<AGameGeneratedActor>(Location2, Rotation);
 			if(GameGeneratedActor)
 			{
-				// Scale it x5
-				GameGeneratedActor->SetActorScale3D(FVector(5.f, 5.f, 5.f));
+				// Scale it
+				//GameGeneratedActor->SetActorScale3D(FVector(5.f, 5.f, 5.f));
 				UE_LOG(GameInit, Log, TEXT("ABasicCodePlayerController: GameGeneratedActor spawned with Location"));
 			}
 		}
